@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/styles.css">
     <link rel="stylesheet" href="../styles/login.css">
+    <script src="../scripts/auth.js" type="module"></script>
     <title>Login / Register</title>
 </head>
 <body>
@@ -20,18 +21,18 @@
             </div>
         </nav>
     </header>
-    
+
     <div class="login-container">
-        <div id="main">
+        <section id="main">
             <h1>Sign In</h1>
             <input id="email" type="text" placeholder="Email">
             <input id="password" type="password" placeholder="Password">
             <button id="submit">Login</button>
             <p><span>or</span></p>
             <button id="sign-up">Sign Up</button>
-        </div>
+        </section>
 
-        <div id="create-acct">
+        <section id="create-acct">
             <h1>Create an Account</h1>
             <input id="email-signup" type="text" placeholder="Email *">
             <input id="confirm-email-signup" type="email" placeholder="Confirm Email *">
@@ -39,7 +40,7 @@
             <input id="confirm-password-signup" type="password" placeholder="Confirm Password *">
             <button id="create-acct-btn">Create Account</button>
             <button id="return-btn">Return to Login</button>
-        </div>
+        </section>
     </div>
 </body>
 </html>

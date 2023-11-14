@@ -10,3 +10,19 @@ const firebaseConfig = {
   measurementId: "G-HY33Z6L6QJ",
 };
 
+// Login / Register navigation Variables
+const signupButton = document.getElementById("sign-up");
+const returnBtn = document.getElementById("return-btn");
+const createacctSection = document.getElementById("create-acct");
+const main = document.getElementById("main");
+
+// Login / Register navigation functionality
+signupButton.addEventListener("click", () => {
+  main.style.display = "none";
+  createacctSection.style.display = "block";
+});
+
+returnBtn.addEventListener("click", () => {
+  main.style.display = "block";
+  createacctSection.style.display = "none";
+});
