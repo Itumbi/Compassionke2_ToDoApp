@@ -1,4 +1,10 @@
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBIAwvw1tLIuEVudTdBycNPZoJ8CT7tO0s",
   authDomain: "compassion-todo-app-7197d.firebaseapp.com",
@@ -10,11 +16,36 @@ const firebaseConfig = {
   measurementId: "G-HY33Z6L6QJ",
 };
 
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
+// Login inputs
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const submitButton = document.getElementById("submit");
+
+// Register Inputs
+
+const signupEmailIn = document.getElementById("email-signup");
+const confirmSignupEmailIn = document.getElementById("confirm-email-signup");
+const signupPasswordIn = document.getElementById("password-signup");
+const confirmSignupPasswordIn = document.getElementById(
+  "confirm-password-signup"
+);
+const createAcctBtn = document.getElementById("create-acct-btn");
+
 // Login / Register navigation Variables
 const signupButton = document.getElementById("sign-up");
 const returnBtn = document.getElementById("return-btn");
 const createacctSection = document.getElementById("create-acct");
 const main = document.getElementById("main");
+
+let email,
+  password,
+  signupEmail,
+  signupPassword,
+  confirmSignupEmail,
+  confirmSignUpPassword;
 
 // Login / Register navigation functionality
 signupButton.addEventListener("click", () => {
