@@ -34,7 +34,7 @@ const confirmSignupPasswordIn = document.getElementById(
 );
 const createAcctBtn = document.getElementById("create-acct-btn");
 
-// Login / Register navigation Variables
+// Login / Register navigation Variables/ Controls
 const signupButton = document.getElementById("sign-up");
 const returnBtn = document.getElementById("return-btn");
 const createacctSection = document.getElementById("create-acct");
@@ -64,10 +64,6 @@ createAcctBtn.addEventListener("click", () => {
     isVerified = false;
   }
 
-  // else if(){
-  // } else{
-  // }
-
   if (
     signupEmail == null ||
     confirmSignupEmail == null ||
@@ -90,9 +86,21 @@ createAcctBtn.addEventListener("click", () => {
   }
 });
 
-submitButton.addEventListener("click", () => {});
+submitButton.addEventListener("click", function () {
+  email = emailInput.value;
+  password = passwordInput.value;
 
-// Login / Register navigation functionality
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      window.alert("Success! Welcome back");
+      window.location = "../pages/createTask.html";
+    })
+    .catch((error) => {
+      window.alert("An Error Occured, Please try again");
+    });
+});
+
+// Login / Register navigation functionality / Controls
 signupButton.addEventListener("click", () => {
   main.style.display = "none";
   createacctSection.style.display = "block";
