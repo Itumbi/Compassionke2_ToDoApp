@@ -96,7 +96,7 @@ submitButton.addEventListener("click", function () {
       window.location = "../pages/createTask.html";
     })
     .catch((error) => {
-      window.alert("An Error Occured, Please try again");
+      window.alert("An Error occured, Please try again");
     });
 });
 
