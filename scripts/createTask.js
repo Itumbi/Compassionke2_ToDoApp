@@ -39,22 +39,6 @@ window.addEventListener("load", function () {
 });
 
 
-// function invoked by delete btn
-function deleteData(code) {
-  firebase
-    .database()
-    .ref("TaskList/" + code)
-    .remove();
-  document.getElementById(code).remove();
-  console.log(totalItems);
-  firebase
-    .database()
-    .ref("TotalTasks")
-    .update({
-      totalItems: totalItems - 1,
-    });
-  console.log(totalItems);
-}
 
 // function invoked by add btn
 function storeTask(event) {
@@ -125,93 +109,4 @@ firebase
     console.log("This is data speaking from open");
     console.log(data);
   });
-
-
-function showAll() {
-  console.log("This is data speaking from within showAll()");
-  console.log(data);
-  if (data === null && document.getElementById("info") == null) {
-    document.getElementById("tasks-header").insertAdjacentHTML(
-      "afterend",
-      `<div class="no-task-info" id = "info">
-            <i class="fas fa-info-circle"></i>
-            No pending tasks
-        </div>`
-    );
-  }
-  if (data === null && document.getElementById("info") !== null) {
-    document.getElementById("info").remove();
-    document.getElementById("tasks-header").insertAdjacentHTML(
-      "afterend",
-      `<div class="no-task-info" id = "info">
-            <i class="fas fa-info-circle"></i>
-            No pending tasks
-        </div>`
-    );
-  }
-  document.querySelectorAll(".Task-item").forEach((element) => {
-    element.remove();
-  });
-
-  for (code in data) {
-    var code = code;
-    var task = data[code]["task"];
-    var desc = data[code]["desc"];
-    var status = data[code]["status"];
-
-    var color;
-    if (status === "pending") {
-      color = "gray";
-    } else {
-      color = "#00b200";
-    }
-
-    // Show the data in the body in form of card
-    document.getElementById("tasks-header").insertAdjacentHTML(
-      "afterend",
-      `<div class="Task-item" id="${code}">
-        <div class="data" id="${task}">
-            <button id="done" class="done" style="color : ${color}" onclick = "changeStatus('${code}')"><i class="far fa-check-circle"></i></button>
-            <h2 class="Task">${task}</h2>
-            <p class="desc">${desc}</p>
-            <small id = "status"></small>
-        </div>
-        <hr>
-        <div class="buttons">
-            <button class="button edit" id="editbtn" onclick = "editData('${code}')"><i class="fas fa-edit"></i> EDIT TASK</button>
-            <button class="button delete" id="deletebtn" onclick = "deleteData('${code}')"><i class="fas fa-trash-alt"></i> DELETE TASK</button>
-        </div>
-        
-        </div>`
-    );
-
-    if (status === "pending") {
-      document.getElementById(code).querySelector("#editbtn").disabled = false;
-      if (
-        document.getElementById(code).querySelector("#editbtn").style
-          .removeProperty
-      ) {
-        document
-          .getElementById(code)
-          .querySelector("#editbtn")
-          .style.removeProperty("background-color");
-      } else {
-        document
-          .getElementById(code)
-          .querySelector("#editbtn")
-          .style.removeAttribute("background-color");
-      }
-      document.getElementById(code).querySelector("#status").innerHTML = "";
-    } else {
-      document.getElementById(code).querySelector("#editbtn").disabled = true;
-      document
-        .getElementById(code)
-        .querySelector("#editbtn").style.backgroundColor =
-        "rgba(116, 116, 116, 0.671)";
-      document.getElementById(code).querySelector("#status").innerHTML = `
-            <i class="far fa-check-circle"></i> Completed
-            `;
-    }
-  }
-}
 
