@@ -18,27 +18,28 @@ firebase.initializeApp(firebaseConfig);
 var totalItems;
 var maxCode;
 var code;
-// window.addEventListener("load", function () {
-//   console.log("Complete Window LOADED");
-//   firebase
-//     .database()
-//     .ref("TotalTasks")
-//     .on("value", function (snapshot) {
-//       totalItems = snapshot.val().totalItems;
-//       maxCode = snapshot.val().maxCode;
-//       console.log("The total Items are : " + totalItems);
-//       if (totalItems > 0 && document.getElementById("info") != null) {
-//         document.getElementById("info").remove();
-//       }
-//       if (totalItems === 0) {
-//         firebase.database().ref("TotalTasks").update({
-//           maxCode: 0,
-//         });
-//       }
-//     });
-// });
+window.addEventListener("load", function () {
+  console.log("Complete Window LOADED");
+  firebase
+    .database()
+    .ref("TotalTasks")
+    .on("value", function (snapshot) {
+      totalItems = snapshot.val().totalItems;
+      maxCode = snapshot.val().maxCode;
+      console.log("The total Items are : " + totalItems);
+      if (totalItems > 0 && document.getElementById("info") != null) {
+        document.getElementById("info").remove();
+      }
+      if (totalItems === 0) {
+        firebase.database().ref("TotalTasks").update({
+          maxCode: 0,
+        });
+      }
+    });
+});
 
 // function invoked by add btn
+
 function storeTask(event) {
   event.preventDefault();
 
@@ -47,7 +48,7 @@ function storeTask(event) {
   var desc = document.getElementById("desc").value;
   document.getElementById("task").value = "";
   document.getElementById("desc").value = "";
-  console.log({ task, desc });
+  // console.log({ task, desc });
 
   code = totalItems;
   if (totalItems < maxCode) {
@@ -80,18 +81,18 @@ function storeTask(event) {
   document.getElementById("tasks-header").insertAdjacentHTML(
     "afterend",
     `<div class="Task-item" id="${code}">
-    <div class="data" id="${task}">
-        <button id="done" class="done" onclick = "changeStatus('${code}')"><i class="far fa-check-circle"></i></button>
-        <h2 class="Task">${task}</h2>
-        <p class="desc">${desc}</p>
-        <small id = "status"></small>
-    </div>
-    <hr>
-    <div class="buttons">
-        <button class="button edit" id="editbtn" onclick = "editData('${code}')"><i class="fas fa-edit"></i> EDIT TASK</button>
-        <button class="button delete" id="deletebtn" onclick = "deleteData('${code}')">
-        <i class="fas fa-trash-alt"></i>DELETE TASK</button>
-    </div>
+      <div class="data" id="${task}">
+          <button id="done" class="done" onclick = "changeStatus('${code}')"><i class="far fa-check-circle"></i></button>
+          <h2 class="Task">${task}</h2>
+          <p class="desc">${desc}</p>
+          <small id = "status"></small>
+      </div>
+      <hr>
+      <div class="buttons">
+          <button class="button edit" id="editbtn" onclick = "editData('${code}')"><i class="fas fa-edit"></i> EDIT TASK</button>
+          <button class="button delete" id="deletebtn" onclick = "deleteData('${code}')">
+          <i class="fas fa-trash-alt"></i>DELETE TASK</button>
+      </div>
     
     </div>`
   );
@@ -107,3 +108,57 @@ firebase
     console.log("This is data speaking from open");
     console.log(data);
   });
+
+// Load Items from Database by a click of a button
+
+function showAll() {
+  console.log(data);
+  if (data === null && document.getElementById("info") == null) {
+    document.getElementById("tasks-header").insertAdjacentHTML(
+      "afterend",
+      `
+      <div class="" id="info">
+         No Pending Tasks
+      </div>
+      `
+    );
+  }
+
+  if (data === null && document.getElementById("info") !== null) {
+    document.getElementById("info").remove();
+    document.getElementById("tasks-header").insertAdjacentHTML(
+      "afterend",
+      `
+        <div class="no-task-info" id="info">
+          No task Pending
+        </div>
+      `
+    );
+  }
+
+  for (code in data) {
+    var code = code;
+    var task = data[code]["task"];
+    var desc = data[code]["desc"];
+    var status = data[code]["status"];
+
+    document.getElementById("tasks-header").insertAdjacentHTML(
+      "afterend",
+      `<div class="Task-item" id="${code}">
+        <div class="data" id="${task}">
+            <button id="done" class="done" onclick = "changeStatus('${code}')"><i class="far fa-check-circle"></i></button>
+            <h2 class="Task">${task}</h2>
+            <p class="desc">${desc}</p>
+            <small id = "status"></small>
+        </div>
+        <hr>
+        <div class="buttons">
+            <button class="button edit" id="editbtn" onclick = "editData('${code}')"><i class="fas fa-edit"></i> EDIT TASK</button>
+            <button class="button delete" id="deletebtn" onclick = "deleteData('${code}')">
+            <i class="fas fa-trash-alt"></i>DELETE TASK</button>
+        </div>
+      
+      </div>`
+    );
+  }
+}
